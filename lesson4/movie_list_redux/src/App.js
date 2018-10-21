@@ -4,6 +4,7 @@ import genreList from './data/genrelist.json'
 import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 import MovieList from './components/MovieList'
 import Filter from './components/Filter'
+import SearchMovieTitle from './components/SearchMovieTitle';
 
 class App extends Component {
   constructor (props) {
@@ -30,6 +31,11 @@ class App extends Component {
               <PageHeader>
                 Movie list <small>based on Redux</small>
               </PageHeader>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <SearchMovieTitle />
             </Col>
           </Row>
           <Row>

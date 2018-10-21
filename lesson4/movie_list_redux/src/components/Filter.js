@@ -33,7 +33,7 @@ class Filter extends Component {
 }
 
 const mapStateToProps = state => ({
-    filter: state.filter
+    filter: state.movieFilter
 })
 
 const mapDispatchToProps = dispatch => ({

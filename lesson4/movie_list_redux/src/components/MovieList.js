@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { addMovies } from '../actions'
+import { addMovies, addGenre } from '../actions'
 import { ListGroup, ListGroupItem, Badge, Label } from 'react-bootstrap'
 
 import movieList from '../data/movielist.json'
@@ -12,6 +12,16 @@ class MovieList extends Component  {
     componentDidMount () {
         this.props.loadMovies(movieList.results)
     }
+    componentDidUpdate(prevProps) {
+        console.log('props changed: ', prevProps, this.props)
+    }
+    handleAddGenre = (genreId) => {
+        const genre = getGenre(genreId);
+        this.props.addGenre({
+            value: genre.id,
+            label: genre.name
+        })
+    }
     render () {
         const filterGenreIds = this.props.filterGenres.map(genre => genre.value)
 
@@ -19,14 +29,19 @@ class MovieList extends Component  {
             const movieGenreIds = movie.genre_ids
             const filteredIdList = movieGenreIds.filter(id => filterGenreIds.includes(id))
             return filteredIdList.length === filterGenreIds.length || filterGenreIds.length === 0
+        }).filter(movie => {
+            const regex = new RegExp(this.props.searchTitle, 'gi')
+            return !!movie.title.match(regex)
         })
+
+
 
         const movieList = movies.map(movie => {
             const genres = movie.genre_ids.map(genreId => {
                 const style = (filterGenreIds.includes(genreId))? "primary":"default"
                 return (
                     <Fragment key={genreId}>
-                        <Label bsStyle={style}>
+                        <Label bsStyle={style} onClick={()=> this.handleAddGenre(genreId)}>
                             {getGenre(genreId).name}
                         </Label>
                         {'  '}
@@ -62,11 +77,13 @@ class MovieList extends Component  {
 
 const mapStateToProps = state => ({
     movies: state.movies,
-    filterGenres: state.filter.genres
+    filterGenres: state.movieFilter.genres,
+    searchTitle: state.movieFilter.searchTitle
 })
 
 const mapDispatchToProps = dispatch => ({
-    loadMovies: (moviesArray) => dispatch (addMovies(moviesArray))
+    loadMovies: (moviesArray) => dispatch (addMovies(moviesArray)),
+    addGenre: (genre) => dispatch (addGenre(genre))
 })
 
 export default connect(

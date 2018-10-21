@@ -3,20 +3,28 @@ import { combineReducers } from 'redux'
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'ADD_MOVIES':
-            return [...action.movieArray]
+            return action.movieArray
         default:
             return state
     }
 }
 
 const filterState = {
-    genres: []
+    genres: [],
+    searchTitle: ''
 }
 
-const filter = (state = filterState, action) => {
+const movieFilter = (state = filterState, action) => {
+    const newState = Object.assign({}, state)
     switch (action.type) {
         case 'FILTER_MOVIES':
-            return action.filter
+            return action.movieFilter
+        case 'ADD_FILTER_GENRE':
+            newState.genres = [...state.genres, action.genre]
+            return newState
+        case 'SET_SEARCH_TITLE':
+            newState.searchTitle = action.searchTitle
+            return newState
         default:
             return state
     }
@@ -24,5 +32,5 @@ const filter = (state = filterState, action) => {
 
 export default combineReducers({
    movies,
-   filter 
+   movieFilter 
 })
