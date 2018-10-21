@@ -1,30 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux'
-import { setText } from './redux/appState/actions'
+import { addItem } from './redux/appState/actions'
+import List from './components/List'
 
 class App extends Component {
 
-  handleChange = event => {
-    this.props.setText(event.target.value)
+  handleSubmit = event => {
+    event.preventDefault()
+    const item = this.inputElementRef.value
+    this.props.addItem(item)
+    this.inputElementRef.value = ''
   }
+
 
   render() {
     return (
       <div className="App">
-        <input type="text" value={this.props.text} onChange={this.handleChange} />
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            ref={inputElement => this.inputElementRef = inputElement }
+          />
+        </form>
+
+        <List />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({appState}) => ({
-  text: appState.text
-})
-
 const mapDispatchToProps = dispatch => ({
-  setText: text => dispatch(setText(text))
+  addItem: item => dispatch(addItem(item))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(null, mapDispatchToProps)(App)

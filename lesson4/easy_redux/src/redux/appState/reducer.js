@@ -1,15 +1,17 @@
 const initialState = {
-    text: ''
+    list: []
 }
 
 export default (state = initialState, action) => {
     const newState = Object.assign({}, state)
     switch (action.type) {
         
-            case 'APPSTATE_SET_TEXT': 
-                newState.text = action.text
+        case 'APPSTATE_ADD_ITEM':
+            newState.list = [...newState.list, action.item]
             return newState
-
+        case 'APPSTATE_DELETE_ITEM':
+            newState.list = newState.list.filter((item, index) => index !== action.index)
+            return newState
         default:
             return state
     }
