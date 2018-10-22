@@ -5,7 +5,7 @@ React - lesson 4 - Redux state management
 
 - repeating React
 - Refacoring your code
-- Redux a predictable state container [info]
+- Redux a predictable state container [info](https://redux.js.org/)
 
 ## Homework 4
 
