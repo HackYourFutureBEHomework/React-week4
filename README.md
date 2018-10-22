@@ -15,7 +15,7 @@ React - lesson 4 - Redux state management
 
 ## Homework 4
 
-Rebuild your todo application with Redux [assignment](https://github.com/HackYourFutureBelgium/React-week4/tree/master/homework%204)
+Rebuild your todo application with Redux [assignment](https://github.com/HackYourFutureBelgium/React-week4/blob/master/homework%204/homework%204.md)
 
 ## Extra
 
